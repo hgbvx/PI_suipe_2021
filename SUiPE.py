@@ -12,12 +12,9 @@ class Simulation:
 
 	@staticmethod
 	def motor_tf(parameters): # K / JLs^2 + (Lb + RJ)s + Rb + K^2
-		J = parameters["J"]
-		b = parameters["b"]
-		Kfi = parameters["K"]
 		R = parameters["R"]
 		L = parameters["L"]
-		return co.tf([1,0],[L, (L*b+R*J)/J, (R*b+Kfi*Kfi)/J])
+		return co.tf([1],[L,R])
 
 	@staticmethod
 	def kfi(parameters):
@@ -30,6 +27,7 @@ class Simulation:
 		return co.tf([1],[J,0])
 
 	@staticmethod
+	# TODO: transfer function
 	def noise(mean,var,samples):
 		return np.random.normal(mean,np.sqrt(var),samples)
 
