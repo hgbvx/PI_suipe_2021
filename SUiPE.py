@@ -18,15 +18,24 @@ class Simulation:
 		return tf1 + tf3
 
 	@staticmethod
+	def p(kp):
+		"""
+
+		:param kp: Gain of regulator
+		:return: Transfer function of P
+		"""
+		tf1 = co.tf([kp], [1])
+		return tf1
+
+	@staticmethod
 	def motor_tf(parameters):  # K / JLs^2 + (Lb + RJ)s + Rb + K^2
 		"""
 
-		:param parameters: Dictionary with resistance and inductance of motor
+		:param parameters: Dictionary with motor parameters
 		:return: Transfer function of motor
 		"""
-		resistance = parameters["R"]
-		inductance = parameters["L"]
-		return co.tf([1], [inductance, resistance])
+		tem = parameters["TEM"]
+		return co.tf([1], [tem, 1])
 
 	@staticmethod
 	def kfi(parameters):
@@ -47,8 +56,3 @@ class Simulation:
 		"""
 		inertia = parameters["J"]
 		return co.tf([1], [inertia, 0])
-
-	@staticmethod
-	# TODO: transfer function
-	def noise(mean, var, samples):
-		return np.random.normal(mean, np.sqrt(var), samples)
